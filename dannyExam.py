@@ -18,6 +18,9 @@ dx=x[1]-x[0]
 print(dx)
 normal=(1/np.sqrt(2*np.pi*sigma**2))*np.exp((-x**2)/(2*sigma))
 
+''' cambiar el dt porque se demora :)
+'''
+
 f_old=normal.copy()
 f_new=np.zeros(len(normal))
 D=dt/dx
@@ -26,7 +29,7 @@ print ("ene, len normal",N," ",len(normal))
 for i in range(int(N)):
     for j in range(len(normal)-1):
         print (j)
-        f_new[j]=f_old[j]*(1-D*( f_old[j+1]-f_old[j] )) #caro: hay un error aca que no se arregla con i en fnew 
+        f_new[i]=f_old[j]*(1-D*( f_old[j+1]-f_old[j] )) # algo esta mal aca
         
     f_old=f_new.copy()
     
