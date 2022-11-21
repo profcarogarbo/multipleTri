@@ -1,0 +1,267 @@
+ratios.append(float('NaN'))
+
+The Python assert statement provides programmers with a simple way to 
+confirm that the state of the computation is as expected. An assert statement 
+can take one of two forms:
+assert Boolean expression
+or
+assert Boolean expression, argument
+When an assert statement is encountered, the Boolean expression is evaluated. 
+If it evaluates to True, execution proceeds on its merry way. If it evaluates to 
+False, an AssertionError exception is raised.
+Assertions are a useful defensive programming tool. They can be used to 
+confirm that the arguments to a function are of appropriate types
+
+
+the code
+print type(IntSet), type(IntSet.insert)
+will print
+<type 'type'> <type 'instancemethod'>
+
+
+------------------------------
+class IntSet(object):
+ 
+		def __init__(self):
+ 			"""Create an empty set of integers"""
+
+
+		def __str__(self):
+ 			"""Returns a string representation of self"""
+
+OJO: a call is made to the __init__ method defined in that 
+class. When the line of code 
+						s = IntSet()
+          is executed. And 's' took the values put on __init__
+-----------------------------------------------
+when the function __str__ is defined, the object to be printed is automatically invoked. For example, the code
+						s = IntSet()
+						s.insert(3)
+						s.insert(4)
+						print s
+will print,
+					{3,4}
+
+if the module __str__ is not defined then the print is
+			 <__main__.IntSet object at 0x1663510>
+
+Other case is __lt__ "less than" and it is called as kari1.num , kari2.num
+
+						def __lt__(self, other):
+ """Returns True if self's name is lexicographically
+ less than other's name, and False otherwise"""
+ if self.lastName == other.lastName:
+ return self.name < other.name
+ return self.lastName < other.lastNam
+
+__lt__. This method overloads the < operator. The method Person__lt__ gets called whenever the first argument to the < operator is of type Person. The __lt__ method in class  Person is implemented using the < operator of type str. The expression 
+self.Name < other.name is shorthand for self.name.__lt__(self.other). Since 
+
+
+
+In the print statement, the built-in class attribute __name__ is used to get a string with the name of the class
+
+def drunkTest(walkLengths, numTrials, dClass):
+	print dClass.__name__, 'random walk of', numSteps, 'steps'
+-----------------------------------
+-
+
+PyLab is a Python standard library module that provides many of the facilities of MATLAB.
+  A complete user’s guide for PyLab is at the Web site 
+matplotlib.sourceforge.net/users/index.html.
+
+
+
+
+import pylab
+pylab.figure(1) #create figure 1
+pylab.plot([1,2,3,4], [1,7,3,5]) #draw on figure 1
+pylab.show() #show figure on scree
+
+The first specifies the x-coordinates of the points to be plotted, and 
+the second specifies the y-coordinates
+
+pylab.title('5% Growth, Compounded Annually')
+pylab.xlabel('Years of Compounding')
+pylab.ylabel('Value of Principal ($)')
+
+pylab.savefig('Figure-Addie') #save figure 2
+pylab.figure(1) #go back to working on figure 1
+pylab.plot([5,6,10,3]) #draw again on figure 1
+pylab.savefig('Figure-Jane') #save figure 1
+
+
+Observe that the last call to pylab.plot is passed only one argument. This argument supplies the y values. 
+
+
+pylab.plot(values, 'ro'), which 
+produces the plot on the right. For a complete list of color and line-style indicators, see 
+http://matplotlib.sourceforge.net/api/pyplot_api.html#matplotlib.pyplot.plot
+
+tambien cambiar tamaños
+pylab.plot(values, linewidth = 30)
+pylab.title('5% Growth, Compounded Annually',
+ fontsize = 'xx-large')
+pylab.xlabel('Years of Compounding', fontsize = 'x-small')
+
+
+---------------------------------------------------------
+
+rray, which PyLab inherits from NumPy.63 The invocation pylab.array
+makes this explicit. There are a number of convenient ways to manipulate arrays 
+that are not readily available for lists. In particular, expressions can be formed 
+using arrays and arithmetic operators. Consider, for example, the code
+a1 = pylab.array([1, 2, 4])
+print 'a1 =', a1
+a2 = a1*2
+print 'a2 =', a2
+print 'a1 + 3 =', a1 + 3
+print '3 - a1 =', 3 - a1
+print 'a1 - a2 =', a1 - a2
+print 'a1*a2 =', a1*a2
+The expression a1*2 multiplies each element of a1 by the constant 2. The 
+expression a1+3 adds the integer 3 to each element of a1.
+
+(if the arrays 
+had been of different length, an error would have occurred). The expression 
+a1*a2 multiplies each element of a1 by the corresponding element of a2
+
+a1 = [1 2 4]
+a2 = [2 4 8]
+a1 + 3 = [4 5 7]
+
+
+pylab.legend(loc = 'upper center') 
+pone el cuadro al plot
+
+
+def rollDie():
+ """Returns a random int between 1 and 6"""
+ return random.choice([1,2,3,4,5,6])
+
+random.random()      entre 0 y 1 
+random.seed(0)
+
+pylab.semilogx 
+pylab.semilogy
+
+pylab.plot(xAxis, diffs, 'bo'). 
+instruct our program to plot unconnected points
+
+def stdDev(X):
+ """Assumes that X is a list of numbers.
+ Returns the standard deviation of X"""
+ mean = float(sum(X))/len(X)
+ tot = 0.0
+ for x in X:
+ tot += (x - mean)**2
+ return (tot/len(X))**0.5 #Square root of mean differenc
+
+
+
+
+
+
+
+A histogram is a plot designed to show the distribution of values in a set of data. The values are first sorted, and then divided into a fixed number of equalwidth bins. A plot is then drawn that shows the number of elements in each bin. Consider, for example, the code
+
+vals = [1, 200] #guarantee that values will range from 1 to 200
+for i in range(1000):
+ num1 = random.choice(range(1, 100))
+ num2 = random.choice(range(1, 100))
+ vals.append(num1+num2)
+pylab.hist(vals, bins = 10
+
+
+The function call pylab.xlim() returns a tuple composed of the minimal and maximal values of the x-axis of the current figure. 
+
+The function call 
+pylab.xlim(xmin, xmax) sets the minimal and maximal values of the x-axis of the current figure. The function pylab.ylim works the same way.
+
+
+
+Normal distributions
+     68 % of data fall in 1 sigma of the mean
+     95 %                 2 
+     99.7%                3
+
+
+
+pylab.errorbar(xVals, means, yerr = 2*pylab.array(sds))
+
+showErrorBars(3, 10, 100)
+
+Normal distributions can be easily generated by calling 
+random.gauss(mu, sigma)
+f(x)=1/(sigma sqrt(2pi) ) exp([(x-mu)^2]/{2 sigma^2})
+
+
+rolling a single die IS UNIFORM
+
+random.uniform(min, max)
+
+
+Similarly, a parabola is described by the quadratic 
+equation y = ax2 + bx + c. Therefore, the call
+pylab.polyfit(observedXVals, observedYVals, 2)
+otherwise pylab.polyfit(observedXVals, observedYVals, n)
+
+the algorithm used by polyfit is called linear regression
+
+
+
+
+
+Any function definition containing a yield statement is treated in a special way. The presence of yield tells the Python system that the function is a generator. Generators are typically used in conjunction with for statements. At the start of the first iteration of a for loop, the interpreter starts executing the code in the body of the generator. It runs until the first time a yield statement is executed, at which point it returns the value of the expression in the yield statement. On the next iteration, the generator resumes execution immediately following the yield, with all local variables bound to the objects to which they were bound when the yield statement was executed, and again runs until a yield statement is executed. It continues to do this until it runs out of code to execute or executes a return statement, at which point the loop is exited.
+
+
+
+III Contenido por semanas
+Semana 1 y 2. [Linux] Comandos b´asicos de UNIX. Editores de texto (Emacs).
+Semana 3 y 4. [LATEX] L´ogica de compilaci´on. Documentclass article. Secciones. Ecuaciones. Tablas y Figuras.
+Bibliograf´ıa.
+Semana 5. [Python] Presentaci´on de Python. Iteraci´on.
+Semana 6. [Python] Recursividad y descomposici´on en funciones.
+Semana 7. [Python] Visuzalizaci´on de datos (Matplotlib).
+Semana 8. Encontrar ra´ıces. M´etodos de bisecci´on. M´etodo de Newton/Rhapson.
+Semana 9 y 10. Histogramas y distribuci´on normal. Valor medio y dispersi´on como mejor estimado e incertidumbre.
+Semana 11. Regresiones lineales y Ajuste de m´ınimos cuadrados.
+Semana 12. Distribuci´on de Poisson. Binomial.
+Semana 13. Modelos computacionales sencillos. Simulaci´on de marcha aleatoria.
+Semana 14 y 15. Simulaciones Monte Carlo. Estimaci´on del n´umero π. Otros ejemplos.
+
+
+
+
+II Contenido por semanas
+Semana 1. Algoritmos. Consola. Repaso de comandos b´asicos de linux.
+Semana 2. [C/Fortran] Introducci´on a programaci´on en C. Lectura de archivos. Iteraci´on.
+Semana 3 y 4. [C/Fortran] Funciones. Recursividad. Manejo de memoria. Punteros.
+Semana 5. Sistemas de control de versiones.
+Semana 6 y 7. Algebra lineal. Descomposic´on LU. Ajustes de m´ınimos cuadrados. Vectores y valores propios.
+Principal Component Analysis.
+Semana 8. Interpolaci´on.
+Semana 9. An´alisis de Fourier. Transformada r´apida de Fourier.
+Semana 10. Integraci´on y derivaci´on num´erica. M´etodos Monte Carlo para integraci´on. Makefiles.
+Semana 11 y 12. Ecuaciones diferenciales ordinarias de 1er y 2do orden.
+Universidad de los Andes | Vigilada Mineducaci´on | Reconocimiento como Universidad: Decreto 1297 del 30 de mayo de 1964.
+Reconocimiento personer´ıa jur´ıdica: Resoluci´on 28 del 23 de febrero de 1949 Minjusticia.
+1
+Semana 13. Ecuaciones diferenciales parciales.
+Semana 14. Marchas aleatorias. Movimiento Browniano.
+Semana 15. Markov Chain Monte Carlo. Ajuste de par´ametros
+
+
+
+
+
+===========================§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§
+
+§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§§=
+Take a piece of code an explain
+
+Names and Lastnames. 
+
+
+Introduction to computation and Programming Using Python
+John V. Guttag

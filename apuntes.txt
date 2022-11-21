@@ -1,0 +1,207 @@
+
+Metodos de Monte Carlo
+https://www.youtube.com/watch?v=tPNL_gwQYcI&index=15&list=PLHQtzvthdVM_MGC9dPFKe4hPAwBd_7RJ3
+El nombre vienen de un Casino en Monaco
+
+https://github.com/ComputoCienciasUniandes/HerramientasComputacionales/blob/master/Lectures/12.Monte-Carlo/Monte-Carlo.ipynb
+https://github.com/ComputoCienciasUniandes/HerramientasComputacionales/blob/master/Lectures/13.MCMC/MCMC.ipynb
+
+
+
+
+
+np.random.rand()
+La secuencia ya viene guardada en el computador 
+
+
+
+cambia la semilla np.random.seed()  y al llamar random.rand() se 
+
+
+Calulo de Pi. areaCirculo/areCuadrado=pi r2/4r2=pi/4 entonces pi=4 areaCirculo/areCuadrado
+
+
+Dos listas x en [-1 a 1],  y de [-1 a 1]
+
+rand son números aleatorios de 0 a 1
+x=random.rand(10000)*2-1
+y=random.rand(10000)*2-1
+
+figure(figsize=(9,9))
+scatter(x,y,alpha=0.2,s=30,c='k')
+xlim(-1,1)
+ylim(-1,1)
+
+
+//selecciona los números que están dentro de un círculo de radio 1
+index=where(x**2+y**2<1)
+entonces genera una lista con los puntos dentro del circulos.
+xy es el cuadrado y los cortados son el circulo. Se pintan de diferente color
+pi=4 (el numeros de puntos dentro del circulos/ numero de puntos totales (que son los que estan dentro del cuadrado)
+
+Para escribir un numero con diferente cantidad de cifras significativas.  print("pi = " '%.16f' " % pi)
+
+--------------------
+Usar el metodo para calcular una integral
+
+La integral es el área bajo la curva.
+
+1. se generan los puntos aleatorios en el intervalo deseado.
+
+randomx=random.rand(10000)*(max-min)+min
+
+2. Luego se eligen los puntos que estan debajo de la curva deseada
+index=where(gauss(randomx)-randomy)
+
+3. plotear los puntos para estar seguros que funciona
+4. La integral es el {area rectangular trabajada inervalosx*intervaloy}*(cantidad de puntos debajo de la curva/cantidad de puntos totales gnerados dentro del intervalo rectangular)
+
+
+comandos
+
+
+n_random = 10000
+random_x = random.rand(n_random) * (max_x - min_x) + min_x
+random_y = random.rand(n_random) * (max_y - min_y) + min_y
+index = where(my_gauss(random_x) - random_y > 0.0)
+scatter(random_x[index], random_y[index], alpha=0.5)
+ylim(0, 1.1)
+
+
+interval_integral = (max_y-min_y) * (max_x - min_x)
+integral  = interval_integral * (size(index)/(1.0*size(random_y)))
+
+#how many points are 'below'?
+print ('dentro:', size(index), 'total:', size(random_y))
+print('Valor de la integral:', integral)
+
+
+usando la libreria de python 
+
+from scipy.integrate import quad
+integral_scipy,err = quad(my_gauss, -5.0, 5.0)
+print ("Integral con Monte-Carlo: ", integral)
+print ("Integral con scipy: ", integral_scipy)
+print ("Resultado Analitico ", sqrt(pi))
+
+otro ejemplo:  def sin_function(x):
+                    return sin(x)**4
+              integral, error = quad(sin_function, 0, 2*pi)
+
+
+---------------------------------------------
+------------------------------------------------------------------------------------------
+---------------------------------------------
+------------------------------------------------------------------------------------------
+---------------------------------------------
+------------------------------------------------------------------------------------------
+
+Markov Chain (Monte-Carlo, esto es basicamente lo que siempre se hace numéricamente)
+
+Estos métodos son usados para generar puntos aleatorios que cumplan con una distribución estadistica dada.
+
+La caracteristica principal de las cadenas de Markov es que el siguiente paso en la cadena depende unicamente del paso actual
+
+Este es el caso de una vriable aleatoria que evoluciona en el tiempo
+
+
+Metropolis-Hastings:
+Generar un número aleatorio que este en el rango de nuestra distribución, para este ejemplo en particular será entre [0, 60], este número lo llamaramos $x_{0}$
+Genero un segundo número aleatorio pero esta vez en un rango mas pequeño digamos entre [-1,1] $x_{1}$
+Evaluo mi función $y$ en $y(x_{0})\ $ y en $y(x_{1})\ $ y defino el número $\alpha = \dfrac{y(x_{1}+x{0})}{y(x_{0})}$
+Genero un número aleatorio entre [0, 1] $\beta$.
+Ahora pueden pasar dos cosas:
+
+Si $\alpha>=1.0\ $ agrego a mi cadena de markov el valor de $x_{1}$ es decir esta me quedaria MCMC = [$x_{0}$, $x_{1}$]
+
+Si $\alpha < 1.0\ $ tengo que comparar $\alpha$ con $\beta$ y si $\beta <= \alpha\ $ agrego a mi cadena de markov $x_{1}$ pero si $\beta > \alpha\ $ agrego a mi cadena de markov otra vez $x_{0}$.
+
+Generar otro número aleaotrio $x_{2}$ y repetir el procedimiento, esto se hace hasta un número N de pasos.
+
+
+walk = []
+x = random.random()*60
+walk.append(x)
+for i in range(200000):
+    x = random.random()*2-1 
+    alpha = function(x + walk[-1])/function(walk[-1])
+
+    if alpha>=1.0:
+        walk.append(walk[-1]+x)
+    else:
+        beta = random.random()
+        if(beta<=alpha):
+            walk.append(walk[-1]+x)
+        else:
+            walk.append(walk[-1])
+
+histo = hist(walk, bins=40, normed=True)
+f = function(X)
+norm = sum(f*(X[1]-X[0]))
+plot(X,f/norm, linewidth=1, color='r')
+
+
+----> en el video hace def de una gausiana
+
+def function(x):
+    y=exp(-((x-30.0)**2)/100.0)
+    return y
+    
+X=linspace(0,60,100)
+y=function(x)
+plot(x,y)
+
+*------------------------------------------------------------------------------
+*------------------------------------------------------------------------------
+*------------------------------------------------------------------------------
+Caminata Aleatoria
+
+define una funcion , donde hay 0.5 de probabilidad de ir hacia la derecha y 0.5 probabilidad de ir hacia la izquierda
+
+Pasos de a 1, y empieza en cero.
+
+genera random de 0 a 1 y revisa si va a la derecha o izq
+
+plotea la caminata
+
+pleat 5 caminatas 10000 pasos cada una
+
+
+*--------------------------
+Para hacer un corazon matematicamente
+$$ab(x) = (1-(|x|-1)^2)^\frac{1}{2}$$$$ar(x) = \arccos(1-|x|) - \pi$$
+
+---------------------------------------------
+Acostarse boca arriba. Relajar músculos faciales, lengua, mandíbula, y lo smúsculos que rodean los ojos. No ceño fruncido libera los músculos en el centro de tu frente. Las cuentas de los ojos también tienen que estar libres. 2) Bajo los hombros tanto como puedas. Para estirar y liberar la tensión en el cuello. Relajar desde la parte superior de los brazos a las manos. Un brazo a la vez. También funciona tensionarlos y dejar que se liberen suavemente. Hacer lo mismo con tus manos y tus dedos. 3) Exhala y relaja el pecho. Siente como tus pulmones se llenan de aire. 4) Relaja las piernas. Primeros los muslos, lñuego las rodillas, pantorrillas y luego los pies. 5) Relajar tu mente. Despejar pensamientos. imaginarse en una canoa en un lago tranquilo, con un cielo azul desjado, encima de ti. Imagen 2. En una habitacióna oscuras, en una hamaca negra de terciopelo. O simplemente pensar para sí mismo "No piense, no pienses, no pienses", durante 10 segundos. 
+
+
+-----------------------------------------------------
+Dos ejercicios. En el primero generar los números con cierta distribución a través de una cadena de Markov, esto tiene histogramas y todo. Y en el segundo el automata celular. 
+También se puede integtrales. Y las integrales estan
+
+No pintar distribucion
+
+
+
+https://github.com/ComputoCienciasUniandes/HerramientasComputacionales/blob/master/Lectures/11.RandomWalks/Random_Walks.ipynb
+
+l = 1 # Length of my step
+n_steps = 100 # lenght of my walk
+
+
+walk_x = np.zeros(n_steps)
+walk_y = np.zeros(n_steps)
+
+for i in range(n_steps-1):
+    theta = np.random.random()*2*np.pi
+    walk_x[i+1] = walk_x[i] + l*cos(theta)
+    walk_y[i+1] = walk_y[i] + l*sin(theta)
+    
+plot(walk_x, walk_y)
+scatter(walk_x[0], walk_y[0], c='r', s=80)
+scatter(walk_x[-1], walk_y[-1], s=80)   
+
+%****************************************************** 
+%****************************************************** 
+Caso difusion
+https://github.com/ComputoCienciasUniandes/HerramientasComputacionales/blob/master/Lectures/12.Monte-Carlo/difusion.ipynb
